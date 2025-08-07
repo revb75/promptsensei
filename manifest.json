@@ -1,9 +1,0 @@
-{
-  "name": "Prompt Sensei",
-  "short_name": "Sensei",
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#0f1115",
-  "theme_color": "#111111",
-  "icons": []
-}
