@@ -22,7 +22,7 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Skip non-HTTP(s) requests (like chrome-extension://)
+  // Ignore requests that aren't http or https
   if (!e.request.url.startsWith('http')) {
     return;
   }
@@ -33,11 +33,13 @@ self.addEventListener('fetch', (e) => {
 
     try {
       const fresh = await fetch(e.request);
-      // Only cache GET requests
-      if (e.request.method === 'GET') {
+
+      // Only try to cache GET requests over http/https
+      if (e.request.method === 'GET' && e.request.url.startsWith('http')) {
         const cache = await caches.open('ps-v1');
         cache.put(e.request, fresh.clone());
       }
+
       return fresh;
     } catch (err) {
       return cached || new Response('Offline', { status: 503 });
